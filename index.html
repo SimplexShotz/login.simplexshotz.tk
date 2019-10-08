@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="google-signin-client_id" content="201767365364-df2kc3prd7vqc1gli6bf6r67ulsefb18.apps.googleusercontent.com">
+    <title>SimplexShotz - Login</title>
+    <script src="https://styles.simplexshotz.tk/setup.js?name=SimplexShotz&head=Login&links=Info:info,Home:home"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  </head>
+  <body style="display: none;">
+    <h1>Login</h1>
+    <div id="login-container">
+      <p>Username</p>
+      <input type="text" id="username">
+      <p>Password</p>
+      <input type="text" id="password">
+      <button>Login (this does not work)</button>
+      <hr>
+      <p>or sign in with Google:</p>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+    <a href="#" onclick="signOut();">Sign out</a>
+    <script>
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        alert('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        alert('Name: ' + profile.getName());
+        alert('Image URL: ' + profile.getImageUrl());
+        alert('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+      }
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+          alert('User signed out.');
+        });
+      }
+    </script>
+  </body>
+</html>
