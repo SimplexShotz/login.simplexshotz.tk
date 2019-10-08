@@ -4,7 +4,7 @@
     <meta name="google-signin-client_id" content="201767365364-df2kc3prd7vqc1gli6bf6r67ulsefb18.apps.googleusercontent.com">
     <title>SimplexShotz - Login</title>
     <script src="https://styles.simplexshotz.tk/setup.js?name=SimplexShotz&head=Login"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
   </head>
   <body style="display: none;">
     <h1>Login</h1>
@@ -16,23 +16,40 @@
       <button>Login (this does not work)</button>
       <hr>
       <p>or sign in with Google:</p>
-      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      <div id="my-signin2"></div>
     </div>
     <a href="#" onclick="signOut();">Sign out</a>
     <script>
-      function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        alert('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        alert('Name: ' + profile.getName());
-        alert('Image URL: ' + profile.getImageUrl());
-        alert('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+      function onSuccess(googleUser) {
+        console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
       }
-      function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-          alert('User signed out.');
+      function onFailure(error) {
+        console.log(error);
+      }
+      function renderButton() {
+        gapi.signin2.render('my-signin2', {
+          'scope': 'profile email',
+          'width': 240,
+          'height': 50,
+          'longtitle': true,
+          'theme': 'dark',
+          'onsuccess': onSuccess,
+          'onfailure': onFailure
         });
       }
+//       function onSignIn(googleUser) {
+//         var profile = googleUser.getBasicProfile();
+//         alert('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+//         alert('Name: ' + profile.getName());
+//         alert('Image URL: ' + profile.getImageUrl());
+//         alert('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+//       }
+//       function signOut() {
+//         var auth2 = gapi.auth2.getAuthInstance();
+//         auth2.signOut().then(function () {
+//           alert('User signed out.');
+//         });
+//       }
     </script>
   </body>
 </html>
